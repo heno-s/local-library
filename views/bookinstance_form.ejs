@@ -1,0 +1,58 @@
+<% book_list.sort(function(a,b) { let textA = a.title.toUpperCase();
+let textB = b.title.toUpperCase(); return textA
+< textB ? -1 : textA>
+    textB ? 1 : 0 }) %>
+    <h1><%= title %></h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="book">Book:</label>
+            <select
+                name="book"
+                id="book"
+                class="form-control"
+                required
+                placeholder="Select book"
+            >
+                <% book_list.forEach(book => { %>
+                <%if(selected_book==book._id.toString()) { %>
+                <option value="<%= book._id %>" selected>
+                    <%= book.title %>
+                </option>
+                <% }else{%>
+                <option value="<%= book._id %>">
+                    <%= book.title %>
+                </option>
+                <%}}) %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="imprint">Imprint:</label>
+            <input type="text" id="imprint" class="form-control" placeholder="Publisher and date information" name="imprint" required value="<%= bookinstance === undefined ? "" : bookinstance.imprint %>">
+        </div>
+        <div class="form-group">
+            <label for="due_back">Date when book available: </label>
+            <input type="date" id="due_back" class="form-control" value="<%= bookinstance === undefined ? "" : bookinstance.due_back_yyyy_mm_dd %>">
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status: </label>
+            <select name="status" id="status" class="form-control" placeholder="Select status" required>
+                <option value="Maintenance" selected="<%= bookinstance === undefined || bookinstance.status !== "Maintenance" ? false : "selected" %>">Maintenance</option>
+                <option value="Available" selected="<%= bookinstance === undefined || bookinstance.status !== "Available" ? false : "selected" %>">Available</option>
+                <option value="Loaned" selected="<%= bookinstance === undefined || bookinstance.status !== "Loaned" ? false : "selected" %>">Loaned</option>
+                <option value="Reserved" selected="<%= bookinstance === undefined || bookinstance.status !== "Reserved" ? false : "selected" %>">Reserved</option>
+            </select>
+            </div>
+
+            <button class="btn btn-primary">Submit</button>
+    </form>
+
+
+    <% if (errors) { %>
+     <ul>
+        <% errors.forEach(error => { %>
+         <li><%= error.msg %></li>
+        <% }) %>
+     </ul>
+    <% } %>

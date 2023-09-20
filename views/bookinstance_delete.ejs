@@ -1,0 +1,19 @@
+<h1>
+    <%= title %>: <%= bookinstance.book.title %>, <%=
+    bookinstance.imprint %>
+</h1>
+
+<p>Do you really want to delete this book Copy?</p>
+<form method="POST">
+    <div class="form-group">
+        <input
+            type="hidden"
+            id="bookinstanceid"
+            class="form-control"
+            name="bookinstanceid"
+            required
+            value="<%= bookinstance._id %>"
+        />
+    </div>
+    <button class="btn btn-primary">Delete</button>
+</form>
